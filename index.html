@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Name</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Courier New', monospace;
+            background-color: #000;
+            color: #00ff00;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            display: flex;
+            min-height: 100vh;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .sidebar {
+            width: 250px;
+            padding: 2rem 1rem;
+            background-color: #001100;
+            border-right: 1px solid #00ff00;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+        }
+        
+        .sidebar h1 {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: #00ff00;
+            text-transform: lowercase;
+        }
+        
+        .directory {
+            list-style: none;
+        }
+        
+        .directory li {
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .directory a {
+            color: #00ff00;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .directory a:hover {
+            color: #ffffff;
+            text-shadow: 0 0 5px #00ff00;
+        }
+        
+        .directory a::before {
+            content: "> ";
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .directory a:hover::before {
+            opacity: 1;
+        }
+        
+        .main-content {
+            flex: 1;
+            padding: 2rem;
+            background: linear-gradient(135deg, #000000 0%, #001a00 100%);
+            position: relative;
+        }
+        
+        .main-content::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(0, 255, 0, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(0, 255, 0, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        
+        .content {
+            position: relative;
+            z-index: 1;
+            max-width: 600px;
+        }
+        
+        .intro h2 {
+            font-size: 1.4rem;
+            margin-bottom: 1.5rem;
+            color: #00ff00;
+            text-transform: lowercase;
+        }
+        
+        .intro p {
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+            text-align: justify;
+        }
+        
+        .intro a {
+            color: #00ff00;
+            text-decoration: none;
+            border-bottom: 1px dotted #00ff00;
+            transition: all 0.3s ease;
+        }
+        
+        .intro a:hover {
+            color: #ffffff;
+            border-bottom-color: #ffffff;
+            text-shadow: 0 0 3px #00ff00;
+        }
+        
+        .typewriter {
+            overflow: hidden;
+            border-right: 0.15em solid #00ff00;
+            white-space: nowrap;
+            margin: 0 auto;
+            letter-spacing: 0.05em;
+            animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+        }
+        
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+        
+        @keyframes blink-caret {
+            from, to { border-color: transparent; }
+            50% { border-color: #00ff00; }
+        }
+        
+        .terminal-prompt::before {
+            content: "$ ";
+            color: #00ff00;
+        }
+        
+        .social-links {
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px dotted #00ff00;
+        }
+        
+        .social-links a {
+            display: inline-block;
+            margin-right: 1rem;
+            margin-bottom: 0.5rem;
+            padding: 0.3rem 0.8rem;
+            border: 1px solid #00ff00;
+            color: #00ff00;
+            text-decoration: none;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            background-color: #00ff00;
+            color: #000;
+            box-shadow: 0 0 10px #00ff00;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+            
+            .directory {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+            
+            .main-content {
+                padding: 1rem;
+            }
+        }
+        
+        .matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.03;
+        }
+    </style>
+</head>
+<body>
+    <div class="matrix-bg" id="matrix"></div>
+    
+    <div class="container">
+        <nav class="sidebar">
+            <h1>./directory</h1>
+            <ul class="directory">
+                <li><a href="#about">about.txt</a></li>
+                <li><a href="#projects">projects/</a></li>
+                <li><a href="#research">research.md</a></li>
+                <li><a href="#cv">cv.pdf</a></li>
+                <li><a href="#blog">blog/</a></li>
+                <li><a href="#contact">contact.html</a></li>
+                <li><a href="#misc">misc/</a></li>
+            </ul>
+        </nav>
+        
+        <main class="main-content">
+            <div class="content">
+                <div class="intro">
+                    <h2 class="typewriter">hello, world!</h2>
+                    
+                    <p> My name is <strong>Daya</strong>! I'm a Neuroscience PhD student
+                    at University of Massachusetts Amherst, and a Hampshire College alumna. My origins lie in 
+                    Bronx, NY, but I now peacefully reside in Amherst, MA.</p>
+                    
+                    <p>If i'm not spending too much time in the lab, i'm likely 
+                    learning how to code, reading a novel or research paper, or hanging out. 
+                    
+                    <p>This website might pass for a professional presence one day, but I'm just a student right now. you can reach 
+                    me for professional or personal reasons through my 
+                    <a href="#contact">contact page</a>. the directory on the left likely 
+                    contains anything you may be looking for.</p>
+                    
+                    <p class="terminal-prompt">currently working on: Transcriptomics of various tauopathies </p>
+                    <p class="terminal-prompt">status: online and probably caffeinated</p>
+                </div>
+                
+                <div class="social-links">
+                    <a href="https://github.com/Yolk239">github</a>
+                    <a href="https://www.linkedin.com/in/daya-mena-59a27a173/">linkedin</a>
+                    <a href="mailto:dayasmena@egmail.com">email</a>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <script>
+        // Matrix rain effect
+        function createMatrixRain() {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.style.position = 'fixed';
+            canvas.style.top = '0';
+            canvas.style.left = '0';
+            canvas.style.width = '100%';
+            canvas.style.height = '100%';
+            canvas.style.pointerEvents = 'none';
+            canvas.style.zIndex = '-1';
+            canvas.style.opacity = '0.05';
+            
+            document.getElementById('matrix').appendChild(canvas);
+            
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            
+            const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
+            const charArray = chars.split('');
+            
+            const fontSize = 14;
+            const columns = canvas.width / fontSize;
+            const drops = [];
+            
+            for (let i = 0; i < columns; i++) {
+                drops[i] = 1;
+            }
+            
+            function draw() {
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                ctx.fillStyle = '#00ff00';
+                ctx.font = fontSize + 'px monospace';
+                
+                for (let i = 0; i < drops.length; i++) {
+                    const text = charArray[Math.floor(Math.random() * charArray.length)];
+                    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                    
+                    if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                        drops[i] = 0;
+                    }
+                    drops[i]++;
+                }
+            }
+            
+            setInterval(draw, 100);
+        }
+        
+        // Initialize matrix effect
+        createMatrixRain();
+        
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('.directory a').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                console.log('Navigating to:', link.getAttribute('href'));
+                // Add your navigation logic here
+            });
+        });
+        
+        // Resize canvas on window resize
+        window.addEventListener('resize', () => {
+            const canvas = document.querySelector('#matrix canvas');
+            if (canvas) {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+        });
+    </script>
+</body>
+</html>
